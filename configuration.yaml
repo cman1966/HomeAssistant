@@ -1,0 +1,171 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  latitude: 38.7593
+  longitude: -77.3081
+  elevation: 113
+  unit_system: imperial
+  time_zone: America/New_York
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  # api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Weather prediction
+sensor:
+  - platform: wunderground
+    api_key: a4a86ff64a220275
+    monitored_conditions:
+      - alerts
+      - temp_c
+      - temp_f
+      - dewpoint_c
+      - dewpoint_f
+      - weather_1d
+      - weather_1n
+      - weather_2d
+      - weather_2n
+      - weather_3d
+      - weather_3n
+      - weather_4d
+      - weather_4n
+  - platform: mqtt
+    state_topic: "pod/sky"
+    name: "POD Ambient Temp"
+    value_template: "{{ value_json.ambient_temp }}"
+    retain: true
+  - platform: mqtt
+    state_topic: "pod/sky"
+    name: "POD Sky Temp"
+    value_template: "{{ value_json.sky_temp }}"
+    retain: true
+
+# Text to speech
+tts:
+  - platform: google
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+zwave:
+  usb_path: /dev/ttyACM0
+
+# enable IOS; allows device tracker, etc.
+ios:
+
+camera coop:
+  - platform: generic
+    still_image_url: 'http://192.168.1.165/snapshot.cgi?user=admin&pwd=digidic'
+    content_type: image/jpeg
+    name: Coop Cam
+    scan_interval: 5
+
+# Foscam FI8910W
+camera POD:
+  - platform: generic
+    still_image_url: 'http://192.168.1.171/snapshot.cgi?user=admin&pwd=digidic2'
+    content_type: image/jpeg
+    icon: 'mdi:camera'
+    name: 'POD Cam'
+    scan_interval: 5
+
+# left-hand menu sidebar
+panel_iframe:
+  nodered:
+    title: 'Node-Red'
+    url: 'http://192.168.1.194:1880/'
+    icon: 'mdi:shuffle-variant'
+  cloud9:
+    title: 'Cloud9 IDE'
+    url: 'http://192.168.1.194:8321/ide.html'
+    icon: 'mdi:shuffle-variant'
+
+
+history_graph:
+  gr1:
+    name: "Ambient vs. Sky Temperature"
+    hours_to_show: 240
+    refresh: 60
+    entities:
+      - sensor.pod_sky_temp
+      - sensor.pod_ambient_temp
+
+switch:
+  - platform: wake_on_lan
+    mac_address: "02:0F:B5:F3:FD:C5"
+    name: "cchristman-dell"
+    host: "192.168.1.172"
+  - platform: wake_on_lan
+    mac_address: "00:24:1D:15:44:FB"
+    name: "unraid"
+    host: "192.168.1.179"
+  - platform: wake_on_lan
+    mac_address: "A0:40:A0:72:F3:F1"
+    name: "switch"
+    host: "192.168.1.161"
+  - platform: wake_on_lan
+    mac_address: "08:00:27:19:A6:6D"
+    name: "fedoravm"
+    host: "192.168.1.106"
+  - platform: wake_on_lan
+    mac_address: "C4:9D:ED:76:A2:E5"
+    name: "xboxone"
+    host: "192.168.1.137"
+  - platform: wake_on_lan
+    mac_address: "02:0F:B5:66:F0:16"
+    name: "powerswitch"
+    host: "192.168.1.40"
+  - platform: wake_on_lan
+    mac_address: "90:2B:34:30:BC:6F"
+    name: "cchristman-pc"
+    host: "192.168.1.122"
+  - platform: wake_on_lan
+    mac_address: "02:0F:B5:E2:0A:D2"
+    name: "WifiExtender"
+    host: "192.168.1.110"
+  - platform: digitalloggers
+    host: 192.168.1.40
+    name: PowerSwitch
+    username: admin
+    password: digidic
+

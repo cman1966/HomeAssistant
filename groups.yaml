@@ -1,0 +1,85 @@
+default_view:
+  view: yes
+  entities:
+    - sun.sun
+    - device_tracker.iphone
+    - sensor.pws_temp_c
+    - sensor.pws_dewpoint_f
+#    - sensor.aeotec_zw100_multisensor_6_temperature
+#    - sensor.aeotec_zw100_multisensor_6_relative_humidity
+    - group.hosts
+
+weather:
+  name: 'Weather'
+  view: yes
+  entities: 
+    - group.weather_items
+
+cameras:
+  name: 'Cameras'
+  view: yes
+  entities:
+    - camera.coop_cam
+    - camera.pod_cam
+
+media_players:
+  name: Media Players
+  view: yes
+  entities:
+    - media_player.basement
+    - media_player.bedroom
+    - media_player.rxv675_a5f40e
+    - media_player.rxv675_a5f40e_zone_2
+
+# Wake-on-lan device status
+hosts:
+  name: Host Status
+  control: hidden
+  entities:
+    - switch.cchristmandell
+    - switch.cchristmanpc
+    - switch.fedoravm
+    - switch.powerswitch
+    - switch.unraid
+    - switch.wifiextender
+    - switch.xboxone
+    - switch.switch
+
+weather_items:
+  name: Weather
+  entities:
+    - sensor.pws_temp_f
+    - sensor.pws_dewpoint_f
+    - sensor.pws_weather_1d
+    - sensor.pws_weather_1n
+    - sensor.pws_weather_2d
+    - sensor.pws_weather_2n
+    - sensor.pws_weather_3d
+    - sensor.pws_weather_3n
+    - sensor.pws_weather_4d
+    - sensor.pws_weather_4n
+    - sensor.pws_alerts
+
+pod_sky_sensor:
+  name: POD Sky Sensor
+  view: yes
+  entities:
+    - sensor.pod_sky_temp
+    - sensor.pod_ambient_temp
+    - history_graph.ambient_vs_sky_temperature
+    - camera.pod_cam
+
+digitallogger:
+  name: Digital Logger Switch
+  view: yes
+  entities:
+    - switch.powerswitch
+    - switch.powerswitch_canon
+    - switch.powerswitch_dew_heater
+    - switch.powerswitch_focuser
+    - switch.powerswitch_g11_mount
+    - switch.powerswitch_outlet_1
+    - switch.powerswitch_outlet_2
+    - switch.powerswitch_outlet_5
+    - switch.powerswitch_usb_hub
+ 
