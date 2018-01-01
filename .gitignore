@@ -1,0 +1,9 @@
+secrets.yaml
+.HA_VERSION
+.ios.conf
+.uuid
+*.log
+*.db
+*.sqlite
+OZW_Log.txt
+plex.conf

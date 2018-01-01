@@ -1,8 +1,8 @@
 homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
-  latitude: 38.7593
-  longitude: -77.3081
+  latitude: !secret home_lat
+  longitude: !secret home_long
   elevation: 113
   unit_system: imperial
   time_zone: America/New_York
@@ -34,21 +34,12 @@ updater:
 
 # Discover some devices automatically
 discovery:
-
-# Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
-
-# Enables support for tracking state changes over time
 history:
-
-# View all events in a logbook
 logbook:
-
-# Enables a map showing the location of tracked devices
 map:
-
-# Track the sun
 sun:
+ios:
 
 # Weather prediction
 sensor:
@@ -90,12 +81,9 @@ script: !include scripts.yaml
 zwave:
   usb_path: /dev/ttyACM0
 
-# enable IOS; allows device tracker, etc.
-ios:
-
 camera coop:
   - platform: generic
-    still_image_url: 'http://192.168.1.165/snapshot.cgi?user=admin&pwd=digidic'
+    still_image_url: !secret coopcam_url
     content_type: image/jpeg
     name: Coop Cam
     scan_interval: 5
@@ -103,7 +91,7 @@ camera coop:
 # Foscam FI8910W
 camera POD:
   - platform: generic
-    still_image_url: 'http://192.168.1.171/snapshot.cgi?user=admin&pwd=digidic2'
+    still_image_url: !secret podcam_url
     content_type: image/jpeg
     icon: 'mdi:camera'
     name: 'POD Cam'
@@ -163,9 +151,10 @@ switch:
     mac_address: "02:0F:B5:E2:0A:D2"
     name: "WifiExtender"
     host: "192.168.1.110"
+
   - platform: digitalloggers
     host: 192.168.1.40
     name: PowerSwitch
-    username: admin
-    password: digidic
+    username: !secret powerswitch_username
+    password: !secret powerswitch_password
 
