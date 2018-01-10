@@ -60,14 +60,14 @@ sensor:
       - weather_4d
       - weather_4n
   - platform: mqtt
-    state_topic: "pod/sky"
+    state_topic: "pod/sky/in"
     name: "POD Ambient Temp"
-    value_template: "{{ value_json.ambient_temp }}"
+    value_template: "{% if value_json.idx == 1 %} {{ value_json.svalue }} {% endif %}"
     retain: true
   - platform: mqtt
-    state_topic: "pod/sky"
+    state_topic: "pod/sky/in"
     name: "POD Sky Temp"
-    value_template: "{{ value_json.sky_temp }}"
+    value_template: "{% if value_json.idx == 3 %} {{ value_json.svalue }} {% endif %}"
     retain: true
 
 # Text to speech
