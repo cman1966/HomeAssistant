@@ -23,6 +23,16 @@ cameras:
     - camera.coop_cam
     - camera.pod_cam
 
+coop:
+  name: 'Coop'
+  view: yes
+  entities:
+    - sensor.coop_hatch
+    - sensor.pws_temp_f
+    - sensor.pws_dewpoint_f
+    - camera.coop_cam
+
+
 media_players:
   name: Media Players
   view: yes

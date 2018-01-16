@@ -40,6 +40,17 @@ logbook:
 map:
 sun:
 ios:
+  push:
+    categories:
+    - name: Update 
+      identifier: update
+      actions:
+      - identifier: update_restart
+        title: 'Update & Restart'
+        activationMode: 'background'
+        authenticationRequired: yes
+        destructive: yes
+        behavior: 'default'
 
 # Weather prediction
 sensor:
@@ -100,6 +111,7 @@ camera coop:
     content_type: image/jpeg
     name: Coop Cam
     scan_interval: 5
+    icon: mdi:cctv
 
 # Foscam FI8910W
 camera POD:
@@ -171,3 +183,10 @@ switch:
     username: !secret powerswitch_username
     password: !secret powerswitch_password
 
+
+zone:
+  - zone: Work
+    latitude: !secret work_lat
+    longitude: !secret work_long
+    radius: 100
+    icon: mdi:at
