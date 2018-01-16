@@ -39,6 +39,10 @@ history:
 logbook:
 map:
 sun:
+
+recorder:
+  db_url: !secret DB 
+  
 ios:
   push:
     categories:
