@@ -64,13 +64,26 @@ sensor:
     name: "POD Ambient Temp"
     value_template: "{% if value_json.idx == 1 %} {{ value_json.svalue }} {% endif %}"
     retain: true
+    expire_after: 0
+    force_update: true
+    unit_of_measurement: 'C'
   - platform: mqtt
     state_topic: "pod/sky/in"
     name: "POD Sky Temp"
-    value_template: "{% if value_json.idx == 3 %} {{ value_json.svalue }} {% endif %}"
+    value_template: "{% if value_json.idx == 2 %} {{ value_json.svalue }} {% endif %}"
+    expire_after: 0
     retain: true
+    force_update: true
+    unit_of_measurement: 'C'
+  - platform: template
+    sensors: 
+      coop_hatch:
+        # sensor_class: opening
+        friendly_name: 'coop hatch'
+        value_template:  '{%- if is_state("sensor.hank_unknown_type0201_id0008_access_control", "22") -%} Open {%- else -%} Closed {%- endif -%}'
 
 # Text to speech
+
 tts:
   - platform: google
 
@@ -112,7 +125,7 @@ panel_iframe:
 history_graph:
   gr1:
     name: "Ambient vs. Sky Temperature"
-    hours_to_show: 240
+    hours_to_show: 48
     refresh: 60
     entities:
       - sensor.pod_sky_temp
