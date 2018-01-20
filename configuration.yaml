@@ -17,9 +17,12 @@ frontend:
 # Enables configuration UI
 config:
 
+mqtt:
+  broker: 192.168.1.106
+
 http:
   # Secrets are defined in the file secrets.yaml
-  # api_password: !secret http_password
+  #  api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
 
@@ -37,6 +40,19 @@ discovery:
 conversation:
 history:
 logbook:
+  exclude:
+    entities:
+      - sensor.pws_weather_1d
+      - sensor.pws_weather_1n
+      - sensor.pws_weather_2d
+      - sensor.pws_weather_2n
+      - sensor.pws_weather_3d
+      - sensor.pws_weather_3n
+      - sensor.pws_weather_4d
+      - sensor.pws_weather_4n
+      - sensor.pws_alerts
+      - sensor.iphone_battery_level
+      - sensor.iphone_battery_state
 map:
 sun:
 
@@ -74,14 +90,14 @@ sensor:
       - weather_3n
       - weather_4d
       - weather_4n
-  - platform: mqtt
-    state_topic: "pod/sky/in"
-    name: "POD Ambient Temp"
-    value_template: "{% if value_json.idx == 1 %} {{ value_json.svalue }} {% endif %}"
-    retain: true
-    expire_after: 0
-    force_update: true
-    unit_of_measurement: 'C'
+#  - platform: mqtt
+#    state_topic: "pod/sky/in"
+#    name: "POD Ambient Temp"
+#    value_template: "{% if value_json.idx == 1 %} {{ value_json.svalue }} {% endif %}"
+#    retain: true
+#    expire_after: 0
+#    force_update: true
+#    unit_of_measurement: 'C'
   - platform: mqtt
     state_topic: "pod/sky/in"
     name: "POD Sky Temp"
@@ -141,7 +157,7 @@ panel_iframe:
 history_graph:
   gr1:
     name: "Ambient vs. Sky Temperature"
-    hours_to_show: 48
+    # hours_to_show: 48
     refresh: 60
     entities:
       - sensor.pod_sky_temp
@@ -194,3 +210,4 @@ zone:
     longitude: !secret work_long
     radius: 100
     icon: mdi:at
+

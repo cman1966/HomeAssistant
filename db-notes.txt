@@ -1,0 +1,102 @@
+To create the database and user account:
+=======================================
+
+$ mysql -u root -p
+
+MariaDB [(none)]> create database homeassistant;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> create user 'hass'@'%' identified by "password";
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> grant all privileges on homeassistant.* to hass;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> grant all privileges on homeassistant.* to 'hass'@'%';
+Query OK, 0 rows affected (0.00 sec)
+
+
+Handy MariaDB Commands
+======================
+MariaDB [homeassistant]> show tables;
++-------------------------+
+| Tables_in_homeassistant |
++-------------------------+
+| events                  |
+| recorder_runs           |
+| schema_changes          |
+| states                  |
++-------------------------+
+4 rows in set (0.00 sec)
+
+
+MariaDB [homeassistant]> describe events;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| event_id   | int(11)     | NO   | PRI | NULL    | auto_increment |
+| event_type | varchar(32) | YES  | MUL | NULL    |                |
+| event_data | text        | YES  |     | NULL    |                |
+| origin     | varchar(32) | YES  |     | NULL    |                |
+| time_fired | datetime    | YES  | MUL | NULL    |                |
+| created    | datetime    | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+MariaDB [homeassistant]> desribe recorder_runs;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'desribe recorder_runs' at line 1
+MariaDB [homeassistant]> describe recorder_runs;
++------------------+------------+------+-----+---------+----------------+
+| Field            | Type       | Null | Key | Default | Extra          |
++------------------+------------+------+-----+---------+----------------+
+| run_id           | int(11)    | NO   | PRI | NULL    | auto_increment |
+| start            | datetime   | YES  | MUL | NULL    |                |
+| end              | datetime   | YES  |     | NULL    |                |
+| closed_incorrect | tinyint(1) | YES  |     | NULL    |                |
+| created          | datetime   | YES  |     | NULL    |                |
++------------------+------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+MariaDB [homeassistant]> describe schema_changes;
++----------------+----------+------+-----+---------+----------------+
+| Field          | Type     | Null | Key | Default | Extra          |
++----------------+----------+------+-----+---------+----------------+
+| change_id      | int(11)  | NO   | PRI | NULL    | auto_increment |
+| schema_version | int(11)  | YES  |     | NULL    |                |
+| changed        | datetime | YES  |     | NULL    |                |
++----------------+----------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+MariaDB [homeassistant]> describe states;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| state_id     | int(11)      | NO   | PRI | NULL    | auto_increment |
+| domain       | varchar(64)  | YES  |     | NULL    |                |
+| entity_id    | varchar(255) | YES  | MUL | NULL    |                |
+| state        | varchar(255) | YES  |     | NULL    |                |
+| attributes   | text         | YES  |     | NULL    |                |
+| event_id     | int(11)      | YES  | MUL | NULL    |                |
+| last_changed | datetime     | YES  |     | NULL    |                |
+| last_updated | datetime     | YES  | MUL | NULL    |                |
+| created      | datetime     | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+MariaDB [homeassistant]> show processlist;
++-----+-------------+--------------+---------------+---------+------+--------------------------+------------------+----------+
+| Id  | User        | Host         | db            | Command | Time | State                    | Info             | Progress |
++-----+-------------+--------------+---------------+---------+------+--------------------------+------------------+----------+
+|   1 | system user |              | NULL          | Daemon  | NULL | InnoDB purge worker      | NULL             |    0.000 |
+|   4 | system user |              | NULL          | Daemon  | NULL | InnoDB purge coordinator | NULL             |    0.000 |
+|   2 | system user |              | NULL          | Daemon  | NULL | InnoDB purge worker      | NULL             |    0.000 |
+|   3 | system user |              | NULL          | Daemon  | NULL | InnoDB purge worker      | NULL             |    0.000 |
+|   5 | system user |              | NULL          | Daemon  | NULL | InnoDB shutdown handler  | NULL             |    0.000 |
+| 121 | root        | localhost    | homeassistant | Query   |    0 | init                     | show processlist |    0.000 |
+| 123 | hass        | hassio:55200 | homeassistant | Sleep   |    4 |                          | NULL             |    0.000 |
+| 124 | hass        | hassio:55202 | homeassistant | Sleep   |    4 |                          | NULL             |    0.000 |
++-----+-------------+--------------+---------------+---------+------+--------------------------+------------------+----------+
+8 rows in set (0.00 sec)
+
+
+
